@@ -116,17 +116,30 @@ public class MainActivity extends AppCompatActivity {
     // 保存记录到数据库
     private void saveRecord() {
         String date = dateInput.getText().toString().trim();
+        int total = indoorCalories + outdoorCalories;
+
         if (date.isEmpty()) {
             Toast.makeText(this, "请输入日期", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int total = indoorCalories + outdoorCalories;
         if (total == 0) {
             Toast.makeText(this, "没有运动数据可保存", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // 根据卡路里判断健身效果并显示提示
+        String fitnessTip;
+        if (total > 500) {
+            fitnessTip = "运动量达标，明天可以休息一下！";
+        } else if (total >= 300) {
+            fitnessTip = "今天是健康的一天～";
+        } else { // 0-299
+            fitnessTip = "运动量小，明天还要继续加油！";
+        }
+        Toast.makeText(this, fitnessTip, Toast.LENGTH_LONG).show();
+
+        // 保存记录到数据库
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String sql = "INSERT INTO " + DatabaseHelper.TABLE_NAME + " (" +
                 DatabaseHelper.COLUMN_DATE + ", " +
@@ -138,5 +151,16 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
         Toast.makeText(this, "记录保存成功", Toast.LENGTH_SHORT).show();
+        clearFields(); // 保存后清空输入和结果
+    }
+
+    // 清空输入框和结果
+    private void clearFields() {
+        dateInput.setText("");
+        indoorCalories = 0;
+        outdoorCalories = 0;
+        indoorResult.setText("室内运动消耗: 0 卡路里");
+        outdoorResult.setText("室外运动消耗: 0 卡路里");
+        totalResult.setText("总消耗: 0 卡路里");
     }
 }
