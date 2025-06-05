@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
         // 根据卡路里判断健身效果并显示提示
         String fitnessTip;
         if (total > 500) {
-            fitnessTip = "运动量达标，明天可以休息一下！\uD83D\uDE0A";
+            fitnessTip = "运动量达标!明天可以休息一下！\uD83D\uDE0A";
         } else if (total >= 300) {
             fitnessTip = "今天是健康的一天!继续保持\uD83D\uDCAA";
         } else { // 0-299
-            fitnessTip = "运动量小，明天还要继续加油！\uD83D\uDE0A";
+            fitnessTip = "运动量小，明天还要继续加油呀\uD83D\uDE0A";
         }
         Toast.makeText(this, fitnessTip, Toast.LENGTH_LONG).show();
 
