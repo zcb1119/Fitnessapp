@@ -44,11 +44,11 @@ public class OutdoorActivity extends AppCompatActivity {
 
         // 计算卡路里（每类运动每分钟消耗的卡路里）
         // 数据来源：https://www.healthline.com/health/fitness-exercise/calories-burned-per-minute
-        int runningCalories = running * 10;     // 跑步每分钟约10卡路里
-        int cyclingCalories = cycling * 7;      // 骑自行车每分钟约7卡路里
-        int swimmingCalories = swimming * 12;   // 游泳每分钟约12卡路里
-        int hikingCalories = hiking * 5;        // 徒步每分钟约5卡路里
-        int walkingCalories = walking * 3;      // 散步每分钟约3卡路里
+        int runningCalories = running * 10;         // 跑步每分钟约10卡路里
+        int cyclingCalories = (int) (cycling * 7.0);  // 骑自行车每分钟约7卡路里
+        int swimmingCalories = swimming * 12;       // 游泳每分钟约12卡路里
+        int hikingCalories = hiking * 5;            // 徒步每分钟约5卡路里
+        int walkingCalories = walking * 3;          // 散步每分钟约3卡路里
 
         int totalCalories = runningCalories + cyclingCalories +
                 swimmingCalories + hikingCalories + walkingCalories;

@@ -44,11 +44,11 @@ public class IndoorActivity extends AppCompatActivity {
 
         // 计算卡路里（每类运动每分钟消耗的卡路里）
         // 数据来源：https://www.healthline.com/health/fitness-exercise/calories-burned-per-minute
-        int pushupsCalories = pushups * 3;     // 俯卧撑每分钟约3卡路里
-        int situpsCalories = (int) (situps * 2.5);     // 仰卧起坐每分钟约2.5卡路里
-        int plankCalories = plank * 4;         // 平板支撑每分钟约4卡路里
-        int squatsCalories = squats * 3.5;     // 深蹲每分钟约3.5卡路里
-        int jumpingJacksCalories = jumpingJacks * 8; // 开合跳每分钟约8卡路里
+        int pushupsCalories = pushups * 3;               // 俯卧撑每分钟约3卡路里
+        int situpsCalories = (int) (situps * 2.5);       // 仰卧起坐每分钟约2.5卡路里
+        int plankCalories = plank * 4;                   // 平板支撑每分钟约4卡路里
+        int squatsCalories = (int) (squats * 3.5);       // 深蹲每分钟约3.5卡路里
+        int jumpingJacksCalories = jumpingJacks * 8;     // 开合跳每分钟约8卡路里
 
         int totalCalories = pushupsCalories + situpsCalories +
                 plankCalories + squatsCalories + jumpingJacksCalories;
