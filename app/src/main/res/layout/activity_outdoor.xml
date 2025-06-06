@@ -26,6 +26,42 @@
             android:orientation="vertical" />
     </ScrollView>
 
+    <!-- 结果显示区域 -->
+    <LinearLayout
+        android:id="@+id/outdoorResultContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="#F5F5F5"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/outdoorResultTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="运动结果"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/outdoorResultDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#666666" />
+
+        <TextView
+            android:id="@+id/outdoorTotalResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/outdoorCalculateButton"
         android:layout_width="match_parent"
