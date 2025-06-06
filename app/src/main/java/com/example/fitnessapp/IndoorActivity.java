@@ -3,23 +3,23 @@ package com.example.fitnessapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class IndoorActivity extends AppCompatActivity {
-    private Spinner exerciseSpinner;
-    private EditText durationInput;
+    private LinearLayout exerciseContainer;
     private Button calculateButton;
     private Map<String, Integer> exerciseCaloriesMap; // 运动项目与卡路里对照表
+    private Map<String, EditText> durationInputs; // 运动项目对应的输入框
     private List<String> exerciseList;
     private int totalCalories = 0;
 
@@ -28,18 +28,15 @@ public class IndoorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_indoor);
 
-        exerciseSpinner = findViewById(R.id.indoorExerciseSpinner);
-        durationInput = findViewById(R.id.indoorDurationInput);
+        exerciseContainer = findViewById(R.id.indoorExerciseContainer);
         calculateButton = findViewById(R.id.indoorCalculateButton);
+        durationInputs = new HashMap<>();
 
         // 初始化室内运动项目和卡路里对照表
         initExerciseData();
 
-        // 设置下拉列表适配器
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, exerciseList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        exerciseSpinner.setAdapter(adapter);
+        // 动态生成运动项目输入区域
+        generateExerciseInputs();
 
         // 计算按钮点击事件
         calculateButton.setOnClickListener(new View.OnClickListener() {
@@ -75,28 +72,69 @@ public class IndoorActivity extends AppCompatActivity {
         exerciseCaloriesMap.put("瑜伽", 280);
     }
 
+    // 动态生成运动项目输入区域
+    private void generateExerciseInputs() {
+        for (String exercise : exerciseList) {
+            // 加载运动项目布局
+            View exerciseItem = getLayoutInflater().inflate(R.layout.exercise_item, null);
+
+            // 设置运动名称
+            TextView nameTextView = exerciseItem.findViewById(R.id.exerciseName);
+            nameTextView.setText(exercise);
+
+            // 获取输入框并保存到映射
+            EditText durationInput = exerciseItem.findViewById(R.id.exerciseDuration);
+            durationInputs.put(exercise, durationInput);
+
+            // 添加文本变化监听器
+            durationInput.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // 可以在这里实时计算每项运动的卡路里
+                }
+            });
+
+            // 添加到容器
+            exerciseContainer.addView(exerciseItem);
+        }
+    }
+
     // 计算卡路里
     private void calculateCalories() {
-        String exercise = exerciseSpinner.getSelectedItem().toString();
-        String durationStr = durationInput.getText().toString();
+        totalCalories = 0;
+        boolean hasInput = false;
 
-        if (durationStr.isEmpty()) {
-            Toast.makeText(this, "请输入运动时间", Toast.LENGTH_SHORT).show();
-            return;
+        for (String exercise : exerciseList) {
+            EditText input = durationInputs.get(exercise);
+            String durationStr = input.getText().toString();
+
+            if (!durationStr.isEmpty()) {
+                hasInput = true;
+                try {
+                    int duration = Integer.parseInt(durationStr);
+                    int caloriesPerHour = exerciseCaloriesMap.get(exercise);
+                    totalCalories += (int) (caloriesPerHour * (duration / 60.0));
+                } catch (NumberFormatException e) {
+                    // 忽略无效输入
+                }
+            }
         }
 
-        try {
-            int duration = Integer.parseInt(durationStr);
-            int caloriesPerHour = exerciseCaloriesMap.get(exercise);
-            totalCalories = (int) (caloriesPerHour * (duration / 60.0));
-
+        if (!hasInput) {
+            // 没有输入任何运动时间
+            setResult(RESULT_CANCELED);
+        } else {
             // 返回结果给主活动
             Intent resultIntent = new Intent();
             resultIntent.putExtra("calories", totalCalories);
             setResult(RESULT_OK, resultIntent);
-            finish();
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "请输入有效的数字", Toast.LENGTH_SHORT).show();
         }
+        finish();
     }
 }
