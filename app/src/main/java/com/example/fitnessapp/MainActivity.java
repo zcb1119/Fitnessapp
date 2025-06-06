@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // 初始化按钮事件
         initButtons();
 
-        // 初始化日期选择器
+        // 初始化日期选择器（修改后的代码）
         initDatePicker();
     }
 
@@ -84,8 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDatePicker() {
         findViewById(R.id.datePickerLayout).setOnClickListener(v -> {
+            // 创建带有确认按钮的日期选择器
             DatePickerDialog dialog = new DatePickerDialog(
                     MainActivity.this,
+                    android.R.style.Theme_Holo_Light_Dialog, // 使用系统默认对话框主题
                     (view, year, month, dayOfMonth) -> {
                         selectedDate.set(Calendar.YEAR, year);
                         selectedDate.set(Calendar.MONTH, month);
@@ -96,7 +98,12 @@ public class MainActivity extends AppCompatActivity {
                     selectedDate.get(Calendar.MONTH),
                     selectedDate.get(Calendar.DAY_OF_MONTH)
             );
+
+            // 显示对话框
             dialog.show();
+
+            // 确保对话框有标题
+            dialog.setTitle("选择日期");
         });
     }
 
@@ -138,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             tips = "今日运动量充足，恭喜达成目标！注意运动后拉伸，补充水分";
         }
 
-        // 显示提示（使用Toast或Snackbar均可）
+        // 显示提示
         Toast.makeText(this, tips, Toast.LENGTH_LONG).show();
     }
 
