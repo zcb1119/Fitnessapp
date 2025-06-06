@@ -44,7 +44,7 @@ public class IndoorActivity extends AppCompatActivity {
 
         generateExerciseInputs();
 
-        // 计算按钮点击事件
+
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
