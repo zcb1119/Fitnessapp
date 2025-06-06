@@ -5,21 +5,30 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private EditText dateInput;
     private TextView indoorResult, outdoorResult, totalResult;
     private int indoorCalories = 0, outdoorCalories = 0;
     private DatabaseHelper dbHelper;
+    private LinearLayout datePickerLayout;
+    private Calendar selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +43,19 @@ public class MainActivity extends AppCompatActivity {
         Button outdoorButton = findViewById(R.id.outdoorButton);
         Button saveButton = findViewById(R.id.saveButton);
         Button historyButton = findViewById(R.id.historyButton);
+        datePickerLayout = findViewById(R.id.datePickerLayout);
 
         dbHelper = new DatabaseHelper(this);
+        selectedDate = Calendar.getInstance();
+        updateDateInput();
+
+        // 日期选择器
+        datePickerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
 
         // 室内运动按钮点击事件
         indoorButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +91,35 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // 显示日期选择器
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        selectedDate.set(Calendar.YEAR, year);
+                        selectedDate.set(Calendar.MONTH, month);
+                        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateDateInput();
+                    }
+                },
+                year, month, day
+        );
+        dialog.show();
+    }
+
+    // 更新日期输入框显示
+    private void updateDateInput() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        dateInput.setText(dateFormat.format(selectedDate.getTime()));
     }
 
     // 处理室内运动结果
@@ -115,13 +164,9 @@ public class MainActivity extends AppCompatActivity {
 
     // 保存记录到数据库
     private void saveRecord() {
-        String date = dateInput.getText().toString().trim();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        String date = dateFormat.format(selectedDate.getTime());
         int total = indoorCalories + outdoorCalories;
-
-        if (date.isEmpty()) {
-            Toast.makeText(this, "请输入日期", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         if (total == 0) {
             Toast.makeText(this, "没有运动数据可保存", Toast.LENGTH_SHORT).show();
@@ -131,11 +176,11 @@ public class MainActivity extends AppCompatActivity {
         // 根据卡路里判断健身效果并显示提示
         String fitnessTip;
         if (total > 500) {
-            fitnessTip = "运动量达标!明天可以休息一下！\uD83D\uDE0A";
+            fitnessTip = "运动量达标，明天可以休息一下！";
         } else if (total >= 300) {
-            fitnessTip = "今天是健康的一天!继续保持\uD83D\uDCAA";
-        } else { // 0-299
-            fitnessTip = "运动量小，明天还要继续加油呀\uD83D\uDE0A";
+            fitnessTip = "今天是健康的一天～";
+        } else {
+            fitnessTip = "运动量小，明天还要继续加油！";
         }
         Toast.makeText(this, fitnessTip, Toast.LENGTH_LONG).show();
 
@@ -151,12 +196,11 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
         Toast.makeText(this, "记录保存成功", Toast.LENGTH_SHORT).show();
-        clearFields(); // 保存后清空输入和结果
+        clearFields();
     }
 
     // 清空输入框和结果
     private void clearFields() {
-        dateInput.setText("");
         indoorCalories = 0;
         outdoorCalories = 0;
         indoorResult.setText("室内运动消耗: 0 卡路里");

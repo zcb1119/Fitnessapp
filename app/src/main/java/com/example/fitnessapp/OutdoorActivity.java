@@ -1,31 +1,47 @@
 package com.example.fitnessapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.content.Intent;
+import android.widget.Spinner;
+import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OutdoorActivity extends AppCompatActivity {
-    private EditText runningTime, cyclingTime, swimmingTime, hikingTime, walkingTime;
-    private TextView resultText;
+    private Spinner exerciseSpinner;
+    private EditText durationInput;
+    private Button calculateButton;
+    private Map<String, Integer> exerciseCaloriesMap; // 运动项目与卡路里对照表
+    private List<String> exerciseList;
+    private int totalCalories = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outdoor);
 
-        runningTime = findViewById(R.id.runningTime);
-        cyclingTime = findViewById(R.id.cyclingTime);
-        swimmingTime = findViewById(R.id.swimmingTime);
-        hikingTime = findViewById(R.id.hikingTime);
-        walkingTime = findViewById(R.id.walkingTime);
-        resultText = findViewById(R.id.outdoorResultText);
-        Button calculateButton = findViewById(R.id.calculateOutdoorButton);
+        exerciseSpinner = findViewById(R.id.outdoorExerciseSpinner);
+        durationInput = findViewById(R.id.outdoorDurationInput);
+        calculateButton = findViewById(R.id.outdoorCalculateButton);
 
+        // 初始化室外运动项目和卡路里对照表
+        initExerciseData();
+
+        // 设置下拉列表适配器
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, exerciseList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        exerciseSpinner.setAdapter(adapter);
+
+        // 计算按钮点击事件
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,36 +50,53 @@ public class OutdoorActivity extends AppCompatActivity {
         });
     }
 
-    private void calculateCalories() {
-        // 获取输入的时间（分钟）
-        int running = getTimeValue(runningTime);
-        int cycling = getTimeValue(cyclingTime);
-        int swimming = getTimeValue(swimmingTime);
-        int hiking = getTimeValue(hikingTime);
-        int walking = getTimeValue(walkingTime);
+    // 初始化室外运动项目数据
+    private void initExerciseData() {
+        exerciseList = new ArrayList<>();
+        exerciseCaloriesMap = new HashMap<>();
 
-        // 计算卡路里（每类运动每分钟消耗的卡路里）
-        // 数据来源：https://www.healthline.com/health/fitness-exercise/calories-burned-per-minute
-        int runningCalories = running * 10;         // 跑步每分钟约10卡路里
-        int cyclingCalories = (int) (cycling * 7.0);  // 骑自行车每分钟约7卡路里
-        int swimmingCalories = swimming * 12;       // 游泳每分钟约12卡路里
-        int hikingCalories = hiking * 5;            // 徒步每分钟约5卡路里
-        int walkingCalories = walking * 3;          // 散步每分钟约3卡路里
+        // 添加更多室外运动项目（每小时卡路里消耗）
+        exerciseList.add("慢跑");
+        exerciseCaloriesMap.put("慢跑", 500);
 
-        int totalCalories = runningCalories + cyclingCalories +
-                swimmingCalories + hikingCalories + walkingCalories;
+        exerciseList.add("快跑");
+        exerciseCaloriesMap.put("快跑", 700);
 
-        // 显示结果
-        resultText.setText("总消耗: " + totalCalories + " 卡路里");
+        exerciseList.add("骑自行车");
+        exerciseCaloriesMap.put("骑自行车", 400);
 
-        // 返回结果给主活动
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("calories", totalCalories);
-        setResult(RESULT_OK, resultIntent);
+        exerciseList.add("游泳");
+        exerciseCaloriesMap.put("游泳", 650);
+
+        exerciseList.add("打篮球");
+        exerciseCaloriesMap.put("打篮球", 550);
+
+        exerciseList.add("爬山");
+        exerciseCaloriesMap.put("爬山", 520);
     }
 
-    private int getTimeValue(EditText editText) {
-        String text = editText.getText().toString().trim();
-        return TextUtils.isEmpty(text) ? 0 : Integer.parseInt(text);
+    // 计算卡路里
+    private void calculateCalories() {
+        String exercise = exerciseSpinner.getSelectedItem().toString();
+        String durationStr = durationInput.getText().toString();
+
+        if (durationStr.isEmpty()) {
+            Toast.makeText(this, "请输入运动时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            int duration = Integer.parseInt(durationStr);
+            int caloriesPerHour = exerciseCaloriesMap.get(exercise);
+            totalCalories = (int) (caloriesPerHour * (duration / 60.0));
+
+            // 返回结果给主活动
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("calories", totalCalories);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "请输入有效的数字", Toast.LENGTH_SHORT).show();
+        }
     }
 }
