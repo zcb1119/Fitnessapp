@@ -38,13 +38,8 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         selectedDate = Calendar.getInstance();
 
-        // 设置当前日期显示
         updateDateDisplay();
-
-        // 初始化按钮事件
         initButtons();
-
-        // 初始化日期选择器（修改后的代码）
         initDatePicker();
     }
 
