@@ -176,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
         // 根据卡路里判断健身效果并显示提示
         String fitnessTip;
         if (total > 500) {
-            fitnessTip = "运动量达标，明天可以休息一下！";
+            fitnessTip = "运动量达标，明天可以休息一下！\uD83D\uDE0A";
         } else if (total >= 300) {
-            fitnessTip = "今天是健康的一天～";
+            fitnessTip = "今天是健康的一天！\uD83D\uDE0A\uD83D\uDCAA";
         } else {
             fitnessTip = "运动量小，明天还要继续加油！";
         }
