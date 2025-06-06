@@ -12,125 +12,41 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:paddingBottom="16dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="俯卧撑" />
-
-        <EditText
-            android:id="@+id/pushupsTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="分钟"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="仰卧起坐" />
-
-        <EditText
-            android:id="@+id/situpsTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="分钟"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="平板支撑" />
-
-        <EditText
-            android:id="@+id/plankTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="分钟"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="深蹲" />
-
-        <EditText
-            android:id="@+id/squatsTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="分钟"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="开合跳" />
-
-        <EditText
-            android:id="@+id/jumpingJacksTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="分钟"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/calculateIndoorButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="计算卡路里" />
+        android:paddingBottom="20dp" />
 
     <TextView
-        android:id="@+id/indoorResultText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="总消耗: 0 卡路里"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:gravity="center" />
+        android:text="选择运动类型:"
+        android:paddingBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/indoorExerciseSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:spinnerMode="dialog" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="运动时间(分钟):"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <EditText
+        android:id="@+id/indoorDurationInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:padding="8dp"
+        android:background="@android:color/white" />
+
+    <Button
+        android:id="@+id/indoorCalculateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="计算卡路里"
+        android:layout_marginTop="24dp" />
 </LinearLayout>

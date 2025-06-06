@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.SimpleCursorAdapter;
 
 public class HistoryActivity extends AppCompatActivity {
     private ListView historyListView;
@@ -21,43 +19,35 @@ public class HistoryActivity extends AppCompatActivity {
         historyListView = findViewById(R.id.historyListView);
         dbHelper = new DatabaseHelper(this);
 
+        // 加载历史记录（按日期降序排列：最新的在前）
         loadHistoryRecords();
     }
 
+    // 加载历史记录并按日期排序
     private void loadHistoryRecords() {
-        List<String> records = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] projection = {
-                DatabaseHelper.COLUMN_DATE,
-                DatabaseHelper.COLUMN_CALORIES
-        };
+
+        // 查询所有记录并按日期降序排列
         Cursor cursor = db.query(
                 DatabaseHelper.TABLE_NAME,
-                projection,
                 null,
                 null,
                 null,
                 null,
-                DatabaseHelper.COLUMN_DATE + " DESC"
+                null,
+                DatabaseHelper.COLUMN_DATE + " DESC" // 按日期降序排列
         );
 
-        if (cursor.moveToFirst()) {
-            do {
-                String date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DATE));
-                int calories = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_CALORIES));
-                records.add(date + " - " + calories + " 卡路里");
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-
-        // 设置适配器显示记录
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        // 设置适配器
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
                 this,
-                android.R.layout.simple_list_item_1,
-                records
+                android.R.layout.simple_list_item_2,
+                cursor,
+                new String[]{DatabaseHelper.COLUMN_DATE, DatabaseHelper.COLUMN_CALORIES},
+                new int[]{android.R.id.text1, android.R.id.text2},
+                0
         );
+
         historyListView.setAdapter(adapter);
     }
 }
