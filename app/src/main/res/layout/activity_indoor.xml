@@ -14,39 +14,22 @@
         android:gravity="center"
         android:paddingBottom="20dp" />
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="选择运动类型:"
-        android:paddingBottom="8dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <Spinner
-        android:id="@+id/indoorExerciseSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:background="@android:color/white"
-        android:spinnerMode="dialog" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="运动时间(分钟):"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
-
-    <EditText
-        android:id="@+id/indoorDurationInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:padding="8dp"
-        android:background="@android:color/white" />
+        <LinearLayout
+            android:id="@+id/indoorExerciseContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
     <Button
         android:id="@+id/indoorCalculateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="计算卡路里"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="16dp" />
 </LinearLayout>
