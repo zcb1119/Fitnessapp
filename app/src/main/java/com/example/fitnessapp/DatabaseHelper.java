@@ -47,5 +47,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowId;
     }
 
-    // 其他方法（如查询历史记录）保持不变
 }
