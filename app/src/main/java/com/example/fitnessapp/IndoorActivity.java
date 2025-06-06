@@ -38,7 +38,7 @@ public class IndoorActivity extends AppCompatActivity {
         totalResult = findViewById(R.id.indoorTotalResult);
         durationInputs = new HashMap<>();
 
-        // 初始化室内运动项目和卡路里对照表
+
         initExerciseData();
 
 
