@@ -35,7 +35,7 @@
             android:layout_height="24dp"
             android:src="@android:drawable/ic_menu_today"
             android:paddingRight="8dp"
-            android:tint="@color/blue_500" /> <!-- 蓝色图标 -->
+            android:tint="@color/light_blue_500" /> <!-- 浅蓝色图标 -->
 
         <EditText
             android:id="@+id/dateInput"
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:text="室内运动"
             android:layout_marginRight="8dp"
-            style="?attr/buttonStyle" /> <!-- 应用蓝色按钮样式 -->
+            style="?attr/buttonStyle" /> <!-- 应用浅蓝色按钮样式 -->
 
         <Button
             android:id="@+id/outdoorButton"
