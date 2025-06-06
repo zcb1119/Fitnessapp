@@ -23,7 +23,9 @@
         android:padding="12dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/white"
+        android:elevation="2dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="室内运动"
-            android:layout_marginRight="8dp" />
+            android:layout_marginRight="8dp"
+            android:background="@android:drawable/btn_default" />
 
         <Button
             android:id="@+id/outdoorButton"
@@ -64,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="室外运动"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            android:background="@android:drawable/btn_default" />
     </LinearLayout>
 
     <TextView
@@ -72,14 +76,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="室内运动消耗: 0 卡路里"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textSize="14sp"
+        android:textColor="#666666" />
 
     <TextView
         android:id="@+id/outdoorResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="室外运动消耗: 0 卡路里"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:textColor="#666666" />
 
     <TextView
         android:id="@+id/totalResult"
@@ -88,21 +96,33 @@
         android:text="总消耗: 0 卡路里"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textColor="#333333" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="保存记录"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:background="@android:drawable/btn_default" />
 
     <Button
         android:id="@+id/historyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="查看历史记录"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:background="@android:drawable/btn_default" />
+
+    <!-- 新增健康知识按钮 -->
+    <Button
+        android:id="@+id/healthTipsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="健康知识"
+        android:layout_marginTop="16dp"
+        android:background="@android:drawable/btn_default" />
 
     <ImageView
         android:layout_width="match_parent"

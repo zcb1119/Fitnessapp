@@ -3,6 +3,7 @@ package com.example.fitnessapp;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.content.ContentValues;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "fitness.db";
@@ -32,4 +33,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
+    // 添加缺失的 insertRecord 方法
+    public long insertRecord(String date, int calories) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE, date);
+        values.put(COLUMN_CALORIES, calories);
+
+        // 插入数据并返回行ID
+        long rowId = db.insert(TABLE_NAME, null, values);
+        db.close();
+        return rowId;
+    }
+
+    // 其他方法（如查询历史记录）保持不变
 }

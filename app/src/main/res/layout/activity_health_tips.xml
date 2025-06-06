@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="健康健身知识"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="健康健身的重要性"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingTop="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="定期运动可增强心肺功能、提高代谢率、降低慢性疾病风险。世界卫生组织建议成年人每周至少进行150分钟中等强度运动，或75分钟高强度运动，分阶段完成更易坚持。"
+        android:textSize="14sp"
+        android:lineSpacingExtra="4sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="每日卡路里消耗目标设定"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingTop="24dp" />
+
+    <!-- 替换 android:textIndent 为 paddingLeft -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="• 300卡路里：相当于步行40分钟或慢跑25分钟，是维持基础代谢的最低活动量，可防止能量囤积。"
+        android:textSize="14sp"
+        android:paddingLeft="32dp"
+        android:textColor="#333333" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="• 500卡路里：相当于游泳30分钟或跳绳40分钟，达到此目标可有效促进脂肪燃烧，建议配合饮食控制实现体重管理。"
+        android:textSize="14sp"
+        android:paddingLeft="32dp"
+        android:textColor="#333333" />
+</LinearLayout>

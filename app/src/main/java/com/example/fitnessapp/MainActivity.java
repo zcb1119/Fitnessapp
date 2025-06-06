@@ -1,23 +1,15 @@
 package com.example.fitnessapp;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -25,186 +17,153 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private EditText dateInput;
     private TextView indoorResult, outdoorResult, totalResult;
-    private int indoorCalories = 0, outdoorCalories = 0;
-    private DatabaseHelper dbHelper;
-    private LinearLayout datePickerLayout;
+    private int indoorCalories = 0;
+    private int outdoorCalories = 0;
     private Calendar selectedDate;
+    private DatabaseHelper dbHelper;
+
+    private static final int INDOOR_REQUEST_CODE = 1;
+    private static final int OUTDOOR_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 初始化组件
         dateInput = findViewById(R.id.dateInput);
         indoorResult = findViewById(R.id.indoorResult);
         outdoorResult = findViewById(R.id.outdoorResult);
         totalResult = findViewById(R.id.totalResult);
-        Button indoorButton = findViewById(R.id.indoorButton);
-        Button outdoorButton = findViewById(R.id.outdoorButton);
-        Button saveButton = findViewById(R.id.saveButton);
-        Button historyButton = findViewById(R.id.historyButton);
-        datePickerLayout = findViewById(R.id.datePickerLayout);
-
         dbHelper = new DatabaseHelper(this);
         selectedDate = Calendar.getInstance();
-        updateDateInput();
 
-        // 日期选择器
-        datePickerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePicker();
-            }
+        // 设置当前日期显示
+        updateDateDisplay();
+
+        // 初始化按钮事件
+        initButtons();
+
+        // 初始化日期选择器
+        initDatePicker();
+    }
+
+    private void initButtons() {
+        // 室内运动按钮
+        Button indoorButton = findViewById(R.id.indoorButton);
+        indoorButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, IndoorActivity.class);
+            startActivityForResult(intent, INDOOR_REQUEST_CODE);
         });
 
-        // 室内运动按钮点击事件
-        indoorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, IndoorActivity.class);
-                indoorLauncher.launch(intent);
-            }
+        // 室外运动按钮
+        Button outdoorButton = findViewById(R.id.outdoorButton);
+        outdoorButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, OutdoorActivity.class);
+            startActivityForResult(intent, OUTDOOR_REQUEST_CODE);
         });
 
-        // 室外运动按钮点击事件
-        outdoorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, OutdoorActivity.class);
-                outdoorLauncher.launch(intent);
-            }
+        // 保存记录按钮
+        Button saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(v -> saveRecord());
+
+        // 历史记录按钮
+        Button historyButton = findViewById(R.id.historyButton);
+        historyButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(intent);
         });
 
-        // 保存记录按钮点击事件
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveRecord();
-            }
-        });
-
-        // 历史记录按钮点击事件
-        historyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
-            }
+        // 健康知识按钮
+        Button healthTipsButton = findViewById(R.id.healthTipsButton);
+        healthTipsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HealthTipsActivity.class);
+            startActivity(intent);
         });
     }
 
-    // 显示日期选择器
-    private void showDatePicker() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    private void initDatePicker() {
+        findViewById(R.id.datePickerLayout).setOnClickListener(v -> {
+            DatePickerDialog dialog = new DatePickerDialog(
+                    MainActivity.this,
+                    (view, year, month, dayOfMonth) -> {
                         selectedDate.set(Calendar.YEAR, year);
                         selectedDate.set(Calendar.MONTH, month);
                         selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        updateDateInput();
-                    }
-                },
-                year, month, day
-        );
-        dialog.show();
+                        updateDateDisplay();
+                    },
+                    selectedDate.get(Calendar.YEAR),
+                    selectedDate.get(Calendar.MONTH),
+                    selectedDate.get(Calendar.DAY_OF_MONTH)
+            );
+            dialog.show();
+        });
     }
 
-    // 更新日期输入框显示
-    private void updateDateInput() {
+    private void updateDateDisplay() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         dateInput.setText(dateFormat.format(selectedDate.getTime()));
     }
 
-    // 处理室内运动结果
-    private ActivityResultLauncher<Intent> indoorLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null) {
-                            indoorCalories = data.getIntExtra("calories", 0);
-                            indoorResult.setText("室内运动消耗: " + indoorCalories + " 卡路里");
-                            updateTotalResult();
-                        }
-                    }
-                }
-            });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == INDOOR_REQUEST_CODE && data != null) {
+                indoorCalories = data.getIntExtra("calories", 0);
+                indoorResult.setText("室内运动消耗: " + indoorCalories + " 卡路里");
+            } else if (requestCode == OUTDOOR_REQUEST_CODE && data != null) {
+                outdoorCalories = data.getIntExtra("calories", 0);
+                outdoorResult.setText("室外运动消耗: " + outdoorCalories + " 卡路里");
+            }
+            updateTotalResult();
+        }
+    }
 
-    // 处理室外运动结果
-    private ActivityResultLauncher<Intent> outdoorLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null) {
-                            outdoorCalories = data.getIntExtra("calories", 0);
-                            outdoorResult.setText("室外运动消耗: " + outdoorCalories + " 卡路里");
-                            updateTotalResult();
-                        }
-                    }
-                }
-            });
-
-    // 更新总消耗显示
     private void updateTotalResult() {
         int total = indoorCalories + outdoorCalories;
         totalResult.setText("总消耗: " + total + " 卡路里");
+
+        // 新增：根据卡路里总量给出健康提示
+        showCalorieTips(total);
     }
 
-    // 保存记录到数据库
+    private void showCalorieTips(int calories) {
+        String tips;
+        if (calories < 300) {
+            tips = "今日运动量不足，建议增加30分钟中等强度运动，如快走或跳绳";
+        } else if (calories >= 300 && calories <= 500) {
+            tips = "今日运动量适中，继续保持！建议每周坚持5天，效果更佳";
+        } else {
+            tips = "今日运动量充足，恭喜达成目标！注意运动后拉伸，补充水分";
+        }
+
+        // 显示提示（使用Toast或Snackbar均可）
+        Toast.makeText(this, tips, Toast.LENGTH_LONG).show();
+    }
+
     private void saveRecord() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         String date = dateFormat.format(selectedDate.getTime());
         int total = indoorCalories + outdoorCalories;
 
         if (total == 0) {
-            Toast.makeText(this, "没有运动数据可保存", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "没有记录任何运动", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 根据卡路里判断健身效果并显示提示
-        String fitnessTip;
-        if (total > 500) {
-            fitnessTip = "运动量达标，明天可以休息一下！\uD83D\uDE0A";
-        } else if (total >= 300) {
-            fitnessTip = "今天是健康的一天！\uD83D\uDE0A\uD83D\uDCAA";
+        // 保存到数据库
+        long rowId = dbHelper.insertRecord(date, total);
+        if (rowId != -1) {
+            Toast.makeText(this, "记录已保存", Toast.LENGTH_SHORT).show();
+            // 重置结果
+            indoorCalories = 0;
+            outdoorCalories = 0;
+            updateTotalResult();
+            indoorResult.setText("室内运动消耗: 0 卡路里");
+            outdoorResult.setText("室外运动消耗: 0 卡路里");
         } else {
-            fitnessTip = "运动量小，明天还要继续加油！";
+            Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, fitnessTip, Toast.LENGTH_LONG).show();
-
-        // 保存记录到数据库
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String sql = "INSERT INTO " + DatabaseHelper.TABLE_NAME + " (" +
-                DatabaseHelper.COLUMN_DATE + ", " +
-                DatabaseHelper.COLUMN_CALORIES + ") VALUES (?, ?)";
-        SQLiteStatement stmt = db.compileStatement(sql);
-        stmt.bindString(1, date);
-        stmt.bindLong(2, total);
-        stmt.executeInsert();
-        db.close();
-
-        Toast.makeText(this, "记录保存成功", Toast.LENGTH_SHORT).show();
-        clearFields();
-    }
-
-    // 清空输入框和结果
-    private void clearFields() {
-        indoorCalories = 0;
-        outdoorCalories = 0;
-        indoorResult.setText("室内运动消耗: 0 卡路里");
-        outdoorResult.setText("室外运动消耗: 0 卡路里");
-        totalResult.setText("总消耗: 0 卡路里");
     }
 }
