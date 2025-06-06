@@ -1,56 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:scrollbars="vertical"
+    android:fillViewport="true"
+    android:background="@color/white">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="健康健身知识"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:paddingBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="健康健身的重要性"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingTop="16dp" />
+        <!-- 标题栏 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="健康健身知识百科"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:textColor="@color/blue_700" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="定期运动可增强心肺功能、提高代谢率、降低慢性疾病风险。世界卫生组织建议成年人每周至少进行150分钟中等强度运动，或75分钟高强度运动，分阶段完成更易坚持。"
-        android:textSize="14sp"
-        android:lineSpacingExtra="4sp" />
+        <!-- 知识模块：健身基础理论 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="一、健身基础理论"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="24dp"
+            android:textColor="@color/blue_500" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="每日卡路里消耗目标设定"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingTop="24dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 运动强度分类"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:textStyle="italic"
+            android:textColor="#666666" />
 
-    <!-- 替换 android:textIndent 为 paddingLeft -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="• 300卡路里：相当于步行40分钟或慢跑25分钟，是维持基础代谢的最低活动量，可防止能量囤积。"
-        android:textSize="14sp"
-        android:paddingLeft="32dp"
-        android:textColor="#333333" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 中等强度运动：心率达到最大心率的60%-70%（最大心率=220-年龄），如快走、骑自行车、羽毛球。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="• 500卡路里：相当于游泳30分钟或跳绳40分钟，达到此目标可有效促进脂肪燃烧，建议配合饮食控制实现体重管理。"
-        android:textSize="14sp"
-        android:paddingLeft="32dp"
-        android:textColor="#333333" />
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 高强度运动：心率达到最大心率的70%-85%，如跑步、游泳、有氧操，需注意循序渐进避免损伤。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <!-- 科学健身原则模块 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="二、科学健身原则"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="32dp"
+            android:textColor="@color/blue_500" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. FITT原则"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:textStyle="italic"
+            android:textColor="#666666" />
+
+        <!-- FITT原则具体内容 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• Frequency（频率）：每周3-5次运动，保持规律性。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• Intensity（强度）：根据体能选择中等或高强度，逐步提升。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• Time（时间）：每次运动30-60分钟，包含热身与放松环节。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• Type（类型）：结合有氧运动、力量训练、柔韧性训练，全面提升体能。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <!-- 运动与健康模块 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="三、运动对健康的具体益处"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="32dp"
+            android:textColor="@color/blue_500" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 心血管系统"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:textStyle="italic"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 增强心肌收缩力，降低血压与胆固醇水平，减少冠心病风险。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. 代谢系统"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:textStyle="italic"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 提高基础代谢率，促进脂肪分解，帮助维持健康体重。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. 心理健康"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:textStyle="italic"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 运动促进内啡肽分泌，缓解压力与焦虑，改善睡眠质量。"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <!-- 常见误区模块 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="四、健身常见误区"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="32dp"
+            android:textColor="@color/blue_500" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 误区1：运动强度越大越好"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="→ 过度运动可能导致肌肉拉伤、免疫力下降，需根据身体信号调整强度。"
+            android:textSize="14sp"
+            android:paddingLeft="48dp"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• 误区2：只做有氧运动即可减脂"
+            android:textSize="14sp"
+            android:paddingLeft="32dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="→ 力量训练可增加肌肉量，提升基础代谢，与有氧结合效果更佳。"
+            android:textSize="14sp"
+            android:paddingLeft="48dp"
+            android:textColor="#666666" />
+
+    </LinearLayout>
+</ScrollView>
