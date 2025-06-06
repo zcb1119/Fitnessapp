@@ -23,7 +23,6 @@
             android:paddingBottom="20dp"
             android:textColor="@color/blue_700" />
 
-        <!-- 知识模块：健身基础理论 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

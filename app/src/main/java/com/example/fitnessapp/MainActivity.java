@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             tips = "今日运动量充足，恭喜达成目标！注意运动后拉伸补充水分\uD83C\uDF1F";
         }
 
-        // 显示提示
         Toast.makeText(this, tips, Toast.LENGTH_LONG).show();
     }
 

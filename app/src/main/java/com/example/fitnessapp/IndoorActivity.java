@@ -41,7 +41,7 @@ public class IndoorActivity extends AppCompatActivity {
         // 初始化室内运动项目和卡路里对照表
         initExerciseData();
 
-        // 动态生成运动项目输入区域
+
         generateExerciseInputs();
 
         // 计算按钮点击事件
