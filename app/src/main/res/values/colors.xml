@@ -2,9 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <!-- 浅蓝色（#42A5F5） -->
     <color name="light_blue_500">#42A5F5</color>
-    <color name="blue_700">#1552B3</color> 
-    <color name="text_primary">#333333</color> <!-- 主文本色 -->
-    <color name="text_secondary">#666666</color> <!-- 次要文本色 -->
+    <color name="blue_700">#1552B3</color>
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
 </resources>

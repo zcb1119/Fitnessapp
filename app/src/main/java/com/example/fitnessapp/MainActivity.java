@@ -101,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
             // 显示对话框
             dialog.show();
-
-            // 确保对话框有标题
             dialog.setTitle("选择日期");
         });
     }
@@ -131,18 +129,18 @@ public class MainActivity extends AppCompatActivity {
         int total = indoorCalories + outdoorCalories;
         totalResult.setText("总消耗: " + total + " 卡路里");
 
-        // 新增：根据卡路里总量给出健康提示
+        // 根据卡路里总量给出健康提示
         showCalorieTips(total);
     }
 
     private void showCalorieTips(int calories) {
         String tips;
         if (calories < 300) {
-            tips = "今日运动量不足，建议增加30分钟中等强度运动，如快走或跳绳";
+            tips = "今日运动量有些少哦！继续加油\uD83D\uDE0A";
         } else if (calories >= 300 && calories <= 500) {
-            tips = "今日运动量适中，继续保持！建议每周坚持5天，效果更佳";
+            tips = "今日运动量适中，继续保持！\uD83C\uDFC3 \uD83C\uDFCB\uFE0F\u200D♂\uFE0F \uD83C\uDFCA\u200D♀\uFE0F \uD83D\uDEB4";
         } else {
-            tips = "今日运动量充足，恭喜达成目标！注意运动后拉伸，补充水分";
+            tips = "今日运动量充足，恭喜达成目标！注意运动后拉伸补充水分\uD83C\uDF1F";
         }
 
         // 显示提示
