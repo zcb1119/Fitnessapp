@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white"> <!-- 白色背景 -->
 
     <TextView
         android:layout_width="match_parent"
@@ -12,7 +13,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:paddingBottom="20dp" />
+        android:paddingBottom="20dp"
+        android:textColor="@color/blue_700" /> <!-- 深蓝色标题 -->
 
     <!-- 日期选择器 -->
     <LinearLayout
@@ -24,15 +26,16 @@
         android:clickable="true"
         android:focusable="true"
         android:layout_marginBottom="16dp"
-        android:background="@android:color/white"
-        android:elevation="2dp">
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@android:drawable/ic_menu_today"
             android:paddingRight="8dp"
-            android:tint="#3366CC" />
+            android:tint="@color/blue_500" /> <!-- 蓝色图标 -->
 
         <EditText
             android:id="@+id/dateInput"
@@ -41,7 +44,7 @@
             android:hint="选择日期"
             android:editable="false"
             android:focusable="false"
-            android:textColor="#333333"
+            android:textColor="@color/text_primary"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -59,7 +62,7 @@
             android:layout_weight="1"
             android:text="室内运动"
             android:layout_marginRight="8dp"
-            android:background="@android:drawable/btn_default" />
+            style="?attr/buttonStyle" /> <!-- 应用蓝色按钮样式 -->
 
         <Button
             android:id="@+id/outdoorButton"
@@ -68,7 +71,7 @@
             android:layout_weight="1"
             android:text="室外运动"
             android:layout_marginLeft="8dp"
-            android:background="@android:drawable/btn_default" />
+            style="?attr/buttonStyle" />
     </LinearLayout>
 
     <TextView
@@ -78,7 +81,7 @@
         android:text="室内运动消耗: 0 卡路里"
         android:layout_marginTop="16dp"
         android:textSize="14sp"
-        android:textColor="#666666" />
+        android:textColor="@color/text_secondary" />
 
     <TextView
         android:id="@+id/outdoorResult"
@@ -87,7 +90,7 @@
         android:text="室外运动消耗: 0 卡路里"
         android:layout_marginTop="8dp"
         android:textSize="14sp"
-        android:textColor="#666666" />
+        android:textColor="@color/text_secondary" />
 
     <TextView
         android:id="@+id/totalResult"
@@ -97,7 +100,7 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_marginTop="16dp"
-        android:textColor="#333333" />
+        android:textColor="@color/text_primary" />
 
     <Button
         android:id="@+id/saveButton"
@@ -105,7 +108,7 @@
         android:layout_height="wrap_content"
         android:text="保存记录"
         android:layout_marginTop="24dp"
-        android:background="@android:drawable/btn_default" />
+        style="?attr/buttonStyle" />
 
     <Button
         android:id="@+id/historyButton"
@@ -113,16 +116,15 @@
         android:layout_height="wrap_content"
         android:text="查看历史记录"
         android:layout_marginTop="16dp"
-        android:background="@android:drawable/btn_default" />
+        style="?attr/buttonStyle" />
 
-    <!-- 新增健康知识按钮 -->
     <Button
         android:id="@+id/healthTipsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="健康知识"
         android:layout_marginTop="16dp"
-        android:background="@android:drawable/btn_default" />
+        style="?attr/buttonStyle" />
 
     <ImageView
         android:layout_width="match_parent"

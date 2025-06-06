@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 基础主题 -->
+    <!-- 基础主题：白色背景 + 蓝色按钮 -->
     <style name="Theme.FitnessApp" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/purple_500</item> <!-- 紫色按钮色 -->
+        <item name="colorAccent">@color/blue_500</item> <!-- 按钮颜色 -->
         <item name="android:windowBackground">@color/white</item> <!-- 白色背景 -->
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Blue</item> <!-- 自定义按钮样式 -->
     </style>
 
-    <!-- 无 ActionBar 的主题（继承自基础主题） -->
+    <!-- 无 ActionBar 主题 -->
     <style name="Theme.FitnessApp.NoActionBar" parent="Theme.FitnessApp">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+    </style>
+
+    <!-- 自定义蓝色按钮样式 -->
+    <style name="Widget.AppCompat.Button.Blue" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/blue_500</item> <!-- 蓝色背景 -->
+        <item name="android:textColor">@android:color/white</item> <!-- 白色文字 -->
+        <item name="android:paddingVertical">12dp</item> <!-- 垂直内边距 -->
+        <item name="android:paddingHorizontal">16dp</item> <!-- 水平内边距 -->
+        <item name="android:elevation">4dp</item> <!-- 阴影 -->
     </style>
 </resources>
